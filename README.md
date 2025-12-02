@@ -2,6 +2,48 @@
 <!doctype html>
 <html lang="ko">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>겐지 주먹전</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>겐지 주먹전</h1>
+      <p class="tagline">타이밍을 맞춰 겐지의 주먹을 날려 보세요!</p>
+    </header>
+
+    <section class="game-area" aria-live="polite">
+      <div class="opponent">
+        <img id="opponentImg" src="opponent_idle.png" alt="상대" />
+        <div id="opponentHP" class="hp-bar"><span></span></div>
+      </div>
+
+      <div class="controls">
+        <button id="punchBtn" class="big-btn">주먹!</button>
+        <button id="skillBtn" class="small-btn">스킬(쿨다운)</button>
+      </div>
+
+      <div class="status">
+        <div>점수: <span id="score">0</span></div>
+        <div>남은 기회: <span id="lives">3</span></div>
+      </div>
+
+      <div id="message" class="message">버튼을 눌러 시작하세요</div>
+    </section>
+
+    <footer>
+      <p>© 팬사이트 — 이미지/저작권 확인 필요</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<!doctype html>
+<html lang="ko">
+<head>
   <meta charset="UTF-8">
   <title>겐지 주먹전 - 규칙</title>
   <link rel="stylesheet" href="css/style.css">
