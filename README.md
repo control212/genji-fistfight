@@ -44,3 +44,74 @@
 
 </body>
 </html>
+function autoSaveRanking(playerName, finalScore) {
+  const ref = db.ref("ranking").push();
+  ref.set({
+    name: playerName,
+    score: finalScore,
+    timestamp: Date.now()
+  });
+}
+if (lives <= 0) {
+  messageEl.textContent = '게임 오버!';
+
+  // 자동 랭킹 저장
+  const playerName = prompt("닉네임을 입력하세요:");
+  autoSaveRanking(playerName, score);
+}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>겐지 주먹전 - 랭킹</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+  <script src="js/firebase.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>🏆 겐지 주먹전 랭킹</h1>
+
+<table id="rankTable" class="rank">
+  <tr>
+    <th>순위</th>
+    <th>닉네임</th>
+    <th>점수</th>
+  </tr>
+</table>
+
+<script>
+  const table = document.getElementById("rankTable");
+
+  // Firebase에 랭킹 데이터가 변경될 때마다 자동 업데이트
+  db.ref("ranking").orderByChild("score").limitToLast(100).on("value", snapshot => {
+
+    const data = [];
+    snapshot.forEach(item => data.push(item.val()));
+
+    // 높은 점수순으로 정렬
+    data.sort((a, b) => b.score - a.score);
+
+    // UI 리셋 후 새 데이터 채움
+    table.innerHTML = `
+      <tr>
+        <th>순위</th>
+        <th>닉네임</th>
+        <th>점수</th>
+      </tr>
+    `;
+
+    data.forEach((item, index) => {
+      table.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${item.name}</td>
+          <td>${item.score}</td>
+        </tr>
+      `;
+    });
+  });
+</script>
+
+</body>
+</html>
